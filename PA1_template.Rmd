@@ -1,13 +1,19 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
+
 
 ## Loading and preprocessing the data
-'''{r echo = TRUE}
+```{r echo = TRUE}
 data <- read.csv("activity.csv", header = TRUE)
-'''
+```
 
 
 ## What is mean total number of steps taken per day?
-'''{r echo = TRUE}
+```{r echo = TRUE}
 stepsPerDay <- sapply(split(data$steps, data$date), sum)
 hist(stepsPerDay, 
      col = "green", 
@@ -18,13 +24,13 @@ hist(stepsPerDay,
      ylim = c(0, 11),
      xlim = c(0, 23000))
 
-mean(total.steps, na.rm = TRUE)
-median(total.steps, na.rm = TRUE)
-'''
+mean(stepsPerDay, na.rm = TRUE)
+median(stepsPerDay, na.rm = TRUE)
+```
 
 
 ## What is the average daily activity pattern?
-'''{r echo = TRUE}
+```{r echo = TRUE}
 avgStepsPerInterval <- sapply(split(data$steps, data$interval), mean, na.rm = TRUE)
 plot(avgStepsPerInterval, 
      col = "red",
@@ -34,11 +40,11 @@ plot(avgStepsPerInterval,
      ylab = "Number of steps")
 
 names(avgStepsPerInterval)[avgStepsPerInterval == max(avgStepsPerInterval)]
-'''
+```
 
 
 ## Imputing missing values
-'''{r echo = TRUE}
+```{r echo = TRUE}
 sum(is.na(data$steps))
 
 dataFilled <- data
@@ -61,11 +67,11 @@ hist(totalStepsPerDay,
 
 mean(totalStepsPerDay, na.rm = TRUE)
 median(totalStepsPerDay, na.rm = TRUE)
-'''
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-'''{r echo = TRUE}
+```{r echo = TRUE}
 dataFilled$weekday <- weekdays(as.Date(dataFilled$date, format = "%Y-%m-%d"))
 dataFilled$dayType <- factor(ifelse(dataFilled$weekday == "Sunday" | dataFilled$weekday == 
                                            "Saturday", "weekend", "weekday"), levels = c("weekday", "weekend"))
@@ -89,4 +95,4 @@ plot(avStepsPerIntWeekdays,
      xlab = "5min interval",
      ylab = "Avg. steps",
      main = "weekday")
-'''
+```
